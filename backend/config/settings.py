@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
 
     # Third-party
     "rest_framework",
@@ -32,6 +33,8 @@ INSTALLED_APPS = [
 
 # Middleware
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",   # MUST BE FIRST
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -104,3 +107,5 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend"
     ]
 }
+CORS_ALLOW_ALL_ORIGINS = True
+

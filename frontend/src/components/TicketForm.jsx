@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 import { useState } from "react";
 import API from "../api";
 
-const TicketForm = () => {
+const TicketForm = ({ onCreated }) => {
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -21,7 +22,9 @@ const TicketForm = () => {
       try {
         const res = await API.post("tickets/classify/", {
           description: value,
+          
         });
+        
 
         if (res.data.suggested_category) {
           setForm((prev) => ({
@@ -34,18 +37,23 @@ const TicketForm = () => {
       setLoading(false);
     }
   };
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await API.post("tickets/", form);
-    setForm({
-      title: "",
-      description: "",
-      category: "general",
-      priority: "low",
-      status: "open",
-    });
-  };
+  await API.post("tickets/", form);
+
+  if (onCreated) {
+    onCreated();
+  }
+
+  setForm({
+    title: "",
+    description: "",
+    category: "general",
+    priority: "low",
+    status: "open",
+  });
+};
 
   return (
     <div className="bg-gray-800 p-6 rounded-xl shadow-lg">

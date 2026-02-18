@@ -16,7 +16,8 @@ const priorityColors = {
   critical: "text-red-500",
 };
 
-const TicketList = () => {
+// eslint-disable-next-line no-unused-vars
+const TicketList = ({ refreshKey }) => {
   const [tickets, setTickets] = useState([]);
   const [filters, setFilters] = useState({
     category: "",
@@ -26,14 +27,22 @@ const TicketList = () => {
   });
 
   const fetchTickets = async () => {
-    const params = new URLSearchParams(filters).toString();
+    const cleanFilters = Object.fromEntries(
+     // eslint-disable-next-line no-unused-vars
+     Object.entries(filters).filter(([_, v]) => v !== "")
+        );
+
+          const params = new URLSearchParams(cleanFilters).toString();
+
     const res = await API.get(`tickets/?${params}`);
     setTickets(res.data);
   };
 
   useEffect(() => {
     fetchTickets();
-  }, [filters]);
+  }, [filters, refreshKey]);
+
+ 
 
   const handleStatusChange = async (id, status) => {
     await API.patch(`tickets/${id}/`, { status });

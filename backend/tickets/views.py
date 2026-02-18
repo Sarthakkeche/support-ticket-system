@@ -21,19 +21,18 @@ class TicketViewSet(viewsets.ModelViewSet):
 
 @api_view(['POST'])
 def classify_view(request):
-    description = request.data.get("description")
+    title = request.data.get("title", "")
+    description = request.data.get("description", "")
 
-    category, priority = classify_ticket(description)
+    # ✅ Correct function call
+    result = classify_ticket(title, description)
 
-    if category and priority:
-        return Response({
-            "suggested_category": category,
-            "suggested_priority": priority
-        })
+    category = result.get("category")
+    priority = result.get("priority")
 
     return Response({
-        "suggested_category": None,
-        "suggested_priority": None
+        "suggested_category": category,
+        "suggested_priority": priority
     })
 
 

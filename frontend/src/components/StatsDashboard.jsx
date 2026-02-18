@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import API from "../api";
 
-const StatsDashboard = () => {
+const StatsDashboard = ({ refreshKey }) => {
   const [stats, setStats] = useState(null);
 
   const fetchStats = async () => {
@@ -16,7 +16,7 @@ const StatsDashboard = () => {
 
   useEffect(() => {
     fetchStats();
-  }, []);
+  }, [refreshKey]);
 
   if (!stats) {
     return (

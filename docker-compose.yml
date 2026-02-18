@@ -1,6 +1,5 @@
-version: "3.9"
-
 services:
+
   db:
     image: postgres:15
     container_name: support-ticket-system-db
@@ -12,18 +11,17 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      retries: 5
 
   backend:
     build: ./backend
     container_name: support-ticket-system-backend
     command: >
-      sh -c "sleep 8 &&
-             python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+      sh -c "
+        echo 'Waiting for database...' &&
+        sleep 10 &&
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000
+      "
     volumes:
       - ./backend:/app
     ports:
@@ -40,10 +38,8 @@ services:
   frontend:
     build: ./frontend
     container_name: support-ticket-system-frontend
-    volumes:
-      - ./frontend:/app
     ports:
-      - "5173:5173"
+      - "3000:3000"
     depends_on:
       - backend
 
