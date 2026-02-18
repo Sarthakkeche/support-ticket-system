@@ -1,21 +1,45 @@
-# Support Ticket System
+# 🚀 Support Ticket System
 
-## Tech Stack
+A full-stack Support Ticket Management System built with:
+
 - Django
 - Django REST Framework
 - PostgreSQL
 - React (Vite)
 - Docker
 
-## How to Run
+---
 
-1. Install Docker
-2. Run:
+## 🐳 Run With Docker
 
-   docker compose up --build
+Clone the repo:
 
-3. Backend runs on:
-   http://localhost:8000
+git clone https://github.com/Sarthakkeche/support-ticket-system.git
 
-4. Frontend runs on:
-   http://localhost:5173
+Go inside folder:
+
+cd support-ticket-system
+
+Run:
+
+docker compose up --build
+
+---
+
+## 🌐 Access
+
+Frontend:
+http://localhost:5173
+
+Backend:
+http://localhost:8000
+
+---
+
+## 📦 Features
+
+- Create Tickets
+- Filter by Category
+- Priority Breakdown
+- Statistics Dashboard
+- Dockerized Deployment
